@@ -8,10 +8,17 @@ class User(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
+    username = Column(String)
     email = Column(String)
-    slack = Column(String)
 
-    def __init__(self, name, email, slack):
+    def __init__(self, name, username, email):
         self.name = name
+        self.username = username
         self.email = email
-        self.slack = slack
+
+    def __as_dict__(self):
+        return {
+            'id': self.id
+            'name': self.name,
+            'username': self.username,
+            'email': self.email}

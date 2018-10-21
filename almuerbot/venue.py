@@ -15,3 +15,10 @@ class Venue(Base):
         self.name = name
         self.distance = distance
         self.url = url
+
+    def __as_dict__(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'distance': self.distance,
+            'url': self.url}
