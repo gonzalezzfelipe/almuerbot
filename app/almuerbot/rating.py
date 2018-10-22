@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Integer, Boolean, ForeignKey
 from sqlalchemy.orm import relationship, backref
 
-from base import Base
+from almuerbot.base import Base
 
 
 class Rating(Base):
