@@ -1,11 +1,14 @@
 version: "3"
 services:
   web:
-    build: .
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+
     ports:
       - "5000:5000"
     volumes:
-      - ./app/:/home/app/
+      - ../app/:/home/app/
     env_file: .env
     depends_on:
       - db
