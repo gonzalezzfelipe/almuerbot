@@ -1,12 +1,13 @@
 from flask import Flask, jsonify, request
 
 from almuerbot.base import Session, engine
-from almuerbot.exceptions import AlreadyExistsException
+from almuerbot.exceptions import AlreadyExistsException, UnmappedInstanceError
 from almuerbot.rating import Rating
 from almuerbot.user import User
 from almuerbot.venue import Venue
 
-from utils import (get, add_if_not_exists, to_snake, get_user, get_venue)
+from utils import (
+    get, add_if_not_exists, to_snake, get_user, get_venue, get_rating)
 
 app = Flask(__name__)
 
@@ -48,8 +49,11 @@ def _delete_user():
     session = Session()
     user_id = request.args.get('user_id')
     user = get_user(user_id, session)
-    session.delete(user)
-    session.commit()
+    try:
+        session.delete(user)
+        session.commit()
+    except UnmappedInstanceError:
+        return '500'
 
 
 @app.route('/venues', methods=['GET'])
@@ -67,8 +71,21 @@ def _get_venues():
         amount=(request.args.get('amount', type=int) or 10)))
 
 
+@app.route('/venues', methods=['DELETE'])
+def _delete_venue():
+    """Delete venue from db."""
+    session = Session()
+    venue_id = request.args.get('venue_id')
+    venue = get_venue(venue_id, session)
+    try:
+        session.delete(venue)
+        session.commit()
+    except UnmappedInstanceError:
+        return '500'
+
+
 @app.route('/venues', methods=['POST'])
-def add_venue():
+def _add_venue():
     """Add venue to db."""
     name = request.args.get('name')
     url = request.args.get('url')
@@ -87,7 +104,7 @@ def add_venue():
 
 
 @app.route('/ratings', methods=['GET'])
-def get_rating():
+def _get_rating():
     """Return rating."""
     args = [
         ('id', int),
@@ -119,7 +136,7 @@ def get_rating():
 
 
 @app.route('/ratings', methods=['POST'])
-def add_rating():
+def _add_rating():
     """Add rating to db."""
     session = Session()
     args = [
@@ -156,6 +173,20 @@ def add_rating():
             data=values)
         session.close()
         return '200'
+
+
+@app.route('/ratings', methods=['DELETE'])
+def _delete_rating():
+    """Delete rating from db."""
+    session = Session()
+    user_id = request.args.get('user_id', type=int)
+    venue_id = request.args.get('venue_id', type=int)
+    rating = get_rating(user_id, venue_id, session)
+    try:
+        session.delete(rating)
+        session.commit()
+    except UnmappedInstanceError:
+        return '500'
 
 
 if __name__ == '__main__':

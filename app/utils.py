@@ -98,7 +98,7 @@ def get_rating(user_id, venue_id, session=None):
     rating = (
         _session
         .query(Rating)
-        .filter([
+        .filter(*[
             User.id == user_id,
             Venue.id == venue_id])
         .first())

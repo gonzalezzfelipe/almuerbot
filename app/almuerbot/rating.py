@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Float
+from sqlalchemy import Column, String, Integer, ForeignKey, Float
 from sqlalchemy.orm import relationship, backref
 
 from almuerbot.base import Base
@@ -17,16 +17,26 @@ class Rating(Base):
     quality = Column(Integer)
     price = Column(Integer)
     wait_time = Column(Integer)
-    monday_food = Column(Boolean)
-    tuesday_food = Column(Boolean)
-    wednesday_food = Column(Boolean)
-    thursday_food = Column(Boolean)
-    friday_food = Column(Boolean)
+    monday_food = Column(Integer)
+    tuesday_food = Column(Integer)
+    wednesday_food = Column(Integer)
+    thursday_food = Column(Integer)
+    friday_food = Column(Integer)
 
-    def __init__(self, user, venue, overall=0, asturias_index=0,
-                 quality=0, price=0, wait_time=0, monday_food=False,
-                 tuesday_food=False, wednesday_food=False,
-                 thursday_food=False, friday_food=False):
+    def __init__(
+            self,
+            user,
+            venue,
+            overall=0,
+            asturias_index=0,
+            quality=0,
+            price=0,
+            wait_time=0,
+            monday_food=0,
+            tuesday_food=0,
+            wednesday_food=0,
+            thursday_food=0,
+            friday_food=0):
         self.user = user
         self.venue = venue
         self.overall = overall
