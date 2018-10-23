@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Boolean, ForeignKey
+from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Float
 from sqlalchemy.orm import relationship, backref
 
 from almuerbot.base import Base
