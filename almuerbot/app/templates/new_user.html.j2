@@ -1,0 +1,23 @@
+{% extends "base.html.j2" %}
+
+{% block content %}
+<div class="container" style="margin-top: 10px">
+  <div class="container" style="margin-top: 10px">
+    <h2>Add User</h2>
+    <form method="post" role="form">
+      <div class="jampp-form-box">
+        <div class="box-title"><label class="user-new">What's your Jampp email?</label></div>
+        <div class="form-row">
+          <input class="form-control" id="name" name="name" required="" type="text" value="">
+        </div>
+        <div class="form-row">
+          <input class="form-control" id="favourite_venue_id" name="favourite_venue_id" required="" type="text" value="">
+        </div>
+      </div>
+      <div class="jampp-submit">
+        <input type="submit" class="btn btn-success btn-lg", id="submit"></input>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,365 @@
+{
+	"schedule_interval": [
+		["{} {} * * *", "Daily"],
+		["{} {} * * 1", "Weekly on Monday"],
+		["{} {} * * 2", "Weekly on Tuesday"],
+		["{} {} * * 3", "Weekly on Wednesday"],
+		["{} {} * * 4", "Weekly on Thursday"],
+		["{} {} * * 5", "Weekly on Friday"],
+		["{} {} * * 6", "Weekly on Saturday"],
+		["{} {} * * 0", "Weekly on Sunday"],
+		["{} {} 1 * *", "First day of the month"]
+	],
+	"cats": [
+		["advertiser", "Advertiser"],
+		["advertiser_id", "Advertiser ID"],
+		["app_platform", "App Platform"],
+		["application", "Application"],
+		["application_id", "Application ID"],
+		["bidding_strategy", "Bidding Strategy"],
+		["campaign", "Group"],
+		["campaign_id", "Group ID"],
+		["campaign_group", "Campaign"],
+		["campaign_group_id", "Campaign ID"],
+		["campaign_group_parameter", "Campaign Parameter"],
+		["campaign_group_type", "Campaign Type"],
+		["campaign_parameter", "Group Parameter"],
+		["campaign_pricingtype", "Group Pricing Type"],
+		["campaign_pricingtype_id", "Group Pricing Type ID"],
+		["campaign_type", "Group Type"],
+		["campaign_type_id", "Group Type ID"],
+		["carrier", "Carrier"],
+		["carrier_id", "Carrier ID"],
+		["city", "City"],
+		["city_id", "City ID"],
+		["country", "Country"],
+		["country_id", "Country ID"],
+		["creative", "Creative"],
+		["creative_id", "Creative ID"],
+		["creative_age_days", "Creative Age (days)"],
+		["creative_text", "Creative Text"],
+		["creative_cta", "Creative CTA"],
+		["creative_parameter", "Creative Parameter"],
+		["creative_icon", "Creative Icon"],
+		["creative_image_name", "Creative Image Name"],
+		["creative_density", "Creative Density"],
+		["creative_background_color", "Creative Background Color"],
+		["creative_cta_background_color", "Creative CTA background color"],
+		["creative_title", "Creative Title"],
+		["creative_url", "Creative URL"],
+		["creative_theme", "Creative Theme"],
+		["creative_palette", "Creative Pallete"],
+		["creative_type", "Creative Type"],
+		["creative_width", "Creative Width"],
+		["creative_height", "Creative Height"],
+		["creative_size", "Creative Size"],
+		["deal", "Deal"],
+		["deal_id", "Deal ID"],
+		["device_marketing_name", "Device Marketing Name"],
+		["device_marketing_name_id", "Device Marketing Name ID"],
+		["exploration", "Exploration"],
+		["gender", "Gender"],
+		["iab_category_1", "IAB Category 1"],
+		["iab_category_2", "IAB Category 2"],
+		["iab_category_3", "IAB Category 3"],
+		["iab_category_4", "IAB Category 4"],
+		["iab_category_5", "IAB Category 5"],
+		["is_rtb", "RTB"],
+		["landing_page", "Landing Page"],
+		["latitude", "Latitude"],
+		["longitude", "Longitude"],
+		["network_type", "Network Type"],
+		["os_brand", "OS Brand"],
+		["os_brand_id", "OS Brand ID"],
+		["os_device", "OS Device"],
+		["os_device_id", "OS Device ID"],
+		["os_lang", "OS Language"],
+		["os_lang_id", "OS Language ID"],
+		["pacing_type", "Pacing Type"],
+		["platform", "Device Platform"],
+		["region", "Region"],
+		["region_id", "Region ID"],
+		["rewarded", "Rewarded"],
+		["site", "Site"],
+		["site_id", "Site ID"],
+		["site_bundle", "Site Bundle"],
+		["site_rtb_id", "Site RTB ID"],
+		["site_traffic_type", "Site Traffic Type"],
+		["source", "Source"],
+		["source_id", "Source ID"],
+		["source_type", "Source Type"],
+		["store_category_1", "Store Category 1"],
+		["store_category_2", "Store Category 2"],
+		["store_category_3", "Store Category 3"],
+		["store_category_4", "Store Category 4"],
+		["sub_site_hash", "Subsite Hash"],
+		["tracking_platform", "Tracking Platform"]
+	],
+	"series": [
+		["clicks", "Clicks"],
+		["impressions", "Impressions"],
+		["bids", "Bids"],
+		["insts_tracked", "Installs"],
+		["organic_installs_tracked", "Organic Installs"],
+		["non_bids", "Non Bids"],
+		["auctions", "Auctions"],
+		["key_events_tracked", "Key Events"],
+		["key_events_organic_tracked", "Organic Key Events"],
+		["ev_count_{}_tracked", "Events"],
+		["ev_value_{}_tracked", "Events Value"],
+		["iti", "ITI"],
+		["iti_cta", "ITI (CTA)"],
+		["ecr", "ECR"],
+		["eir", "EIR"],
+		["ctr", "CTR"],
+		["cvr", "CVR"],
+		["ecpc", "CPC"],
+		["ecpm", "CPM"],
+		["eroi", "ROI"],
+		["win_rate", "Win Rate"],
+		["bid_rate", "Bid Rate"],
+		["emargin", "Margin"],
+		["cost_usd_tracked", "Jcost"],
+		["revenue_usd_tracked", "Spend"],
+		["qps", "QPS"],
+		["efficiency_rate", "Efficiency Rate"],
+		["bid_price_avg", "ABP"],
+		["pctr_avg", "AVG PCTR"],
+		["pcvr_avg", "AVG PCVR"],
+		["distinct_clicks", "Distinct Clicks"]
+	],
+	"permanent-filters": [
+		{
+			"type": "select_multiple",
+			"label": "Advertiser",
+			"id": "advertiser",
+			"choices": []
+		},
+		{
+			"type": "select_multiple",
+			"label": "Application",
+			"id": "application",
+			"choices": []
+		},
+		{
+			"type": "select_multiple",
+			"label": "Campaign",
+			"id": "campaign_group",
+			"choices": []
+		},
+		{
+			"type": "select_multiple",
+			"label": "Group",
+			"id": "campaign",
+			"choices": []
+		}
+	],
+	"filters": [
+    {
+			"label": "Creative Type",
+			"id": "creative_type",
+			"type": "select_multiple",
+			"choices": [
+				["VIDEO", "VIDEO"],
+				["NATIVE", "NATIVE"],
+				["IMAGE", "IMAGE"],
+				["HTML", "HTML"]
+			]
+		},
+		{
+			"type": "select_multiple",
+			"label": "Creative Size",
+			"id": "creative_size",
+			"choices": [
+				["300x50", "300x50 - Banner (Old)"],
+				["320x50", "320x50 - Banner"],
+				["300x250", "300x250 - Inline Rectangle"],
+				["728x90", "728x90 - Leaderboard"],
+				["120x600", "120x600 - Skyscraper"],
+				["468x60", "468x60 - Classic Banner, Desktop"],
+				["320x480", "320x480 - Interstitial"],
+				["480x320", "480x320 - Interstitial (Landscape)"],
+				["768x1024", "768x1024 - Interstitial, Tablet"],
+				["1024x768", "1024x768 - Interstitial, Tablet (Landscape)"],
+				["216x36", "216x36 - Wide M"],
+				["120x20", "120x20 - Wide XS"],
+				["0x0", "Native Ad"],
+				["160x600", "160x600 - Wide Skyscraper"],
+				["168x28", "168x28 - Wide S"],
+				["480x60", "480x60 - Banner Nexage"],
+				["480x75", "480x60 - Banner Nexage"],
+				["1080x1920", "1080x1920 - Tablet"],
+				["1136x640", "1136x640 - Tablet"],
+				["1920x1080", "1920x1080 - Tablet"],
+				["480x820", "480x820 - Mobile"],
+				["628x1200", "628x1200 - Mobile"],
+				["640x1136", "640x1136 - Tablet"],
+				["820x480", "820x480 - Mobile"],
+				["1280x720", "1280x720 - Video 16:9"],
+				["300x169", "300x169 - Video 16:9"],
+				["355x200", "355x200 - Video 16:9"],
+				["480x800", "480x800 - Video Portrait"],
+				["360x640", "360x640 - Mobile"],
+				["320x250", "320x250 - Rectangle"],
+				["336x480", "336x480 - Mobile"],
+				["336x280", "336x280 - ADX Square"],
+				["250x250", "250x250 - ADX Square"],
+				["200x200", "200x200 - ADX Square"],
+				["300x600", "300x600 - ADX Interstitial"],
+				["360x50", "360x50 - ADX Banner"],
+				["320x80", "320x80 - ADX Banner"],
+				["320x360", "320x360 - ADX Square"]
+			]
+		},
+		{
+			"type": "select_multiple",
+			"label": "Network Type",
+			"id": "network_type",
+			"choices": [
+				["wifi", "Wifi"],
+				["celular", "Celular"]
+			]
+		},
+		{
+			"type": "select_multiple",
+			"label": "Time of Day",
+			"id": "time_of_day",
+			"choices": [
+				["0", "0"],
+				["1", "1"],
+				["2", "2"],
+				["3", "3"],
+				["4", "4"],
+				["5", "5"],
+				["6", "6"],
+				["7", "7"],
+				["8", "8"],
+				["9", "9"],
+				["10", "10"],
+				["11", "11"],
+				["12", "12"],
+				["13", "13"],
+				["14", "14"],
+				["15", "15"],
+				["16", "16"],
+				["17", "17"],
+				["18", "18"],
+				["19", "19"],
+				["20", "20"],
+				["21", "21"],
+				["22", "22"],
+				["23", "23"]
+			]
+		},
+		{
+			"type": "select_multiple",
+			"label": "Day of Week",
+			"id": "day_of_week",
+			"choices": [
+				["0", "Sunday"],
+				["1", "Monday"],
+				["2", "Tuesday"],
+				["3", "Wednesday"],
+				["4", "Thursday"],
+				["5", "Friday"],
+				["6", "Saturday"]
+			]
+		},
+		{
+			"type": "select",
+			"label": "Time Group",
+			"id": "granularity",
+			"choices": [
+				["", "None/accumulated"],
+				["hourly", "Hour"],
+				["daily", "Day"],
+				["weekly", "Week"],
+				["monthly", "Month"],
+				["time_of_day", "Time of day"],
+				["day_of_week", "Day of week"]
+			]
+		},
+		{
+			"type": "select_multiple",
+			"label": "Source",
+			"id": "source",
+			"choices": []
+		},
+		{
+			"type": "select_multiple",
+			"label": "Country",
+			"id": "country",
+			"choices": []
+		},
+		{
+			"type": "select_multiple",
+			"label": "Campaign Type",
+			"id": "campaign_group_type",
+			"choices": [
+				["1", "UA"],
+				["2", "RTGT"],
+				["3", "OTHER"]
+			]
+		},
+		{
+			"type": "select_multiple",
+			"label": "App Platform",
+			"id": "app_platform",
+			"choices": [
+				["ANDROID", "ANDROID"],
+				["IOS", "IOS"]
+			]
+		},
+		{
+			"type": "select_multiple",
+			"label": "Status",
+			"id": "status",
+			"choices": [
+				["LIVE", "LIVE"],
+				["ARCHIVED", "ARCHIVED"]
+			]
+		},
+		{
+			"type": "select",
+			"label": "Cleanup operator",
+			"id": "cleanup_operator_",
+			"choices": [
+				["", ""],
+				[">=", "More than"],
+				["<=", "Less than"],
+				["=", "Exactly"]
+			]
+		},
+		{
+			"type": "select",
+			"label": "Cleanup field",
+			"id": "cleanup_field_",
+			"choices": [
+				["", ""],
+				["insts_tracked", "Installs"],
+				["clicks", "Clicks"],
+				["impressions", "Impressions"],
+				["bids", "Bids"],
+				["ctr", "CTR"],
+				["cvr", "CVR"],
+				["win_rate", "Win Rate"],
+				["bid_rate", "Bid Rate"],
+				["cost_usd_tracked", "Jcost"],
+				["revenue_usd_tracked", "Spend"]
+			]
+		},
+		{
+			"type": "string",
+			"label": "Cleanup value",
+			"id": "cleanup_value_"
+		}
+	],
+	"tokens": [
+		["", "None"],
+		["{{ (next_execution_date - macros.timedelta(1)).strftime('%Y-%m-%d') }}", "{day}"],
+		["{{ (next_execution_date - macros.timedelta(1)).strftime('%A') }}", "{weekday}"],
+		["{{ (next_execution_date - macros.timedelta(1)).strftime('%U') }}", "{week}"],
+		["{{ (next_execution_date - macros.timedelta(1)).strftime('%B') }}", "{month}"],
+		["{{ (next_execution_date - macros.timedelta(1)).strftime('%Y') }}", "{year}"]
+	]
+}
