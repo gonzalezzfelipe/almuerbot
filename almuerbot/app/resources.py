@@ -4,7 +4,7 @@ from flask import make_response, jsonify
 from flask_restful import Resource, reqparse, abort
 
 from almuerbot.config import constants
-from almuerbot.manager import UserManager, RatingManager, VenueManager
+from almuerbot.data.manager import UserManager, RatingManager, VenueManager
 from almuerbot.utils import ignore_empty_string
 
 
@@ -14,9 +14,11 @@ class BaseResource(Resource):
     @staticmethod
     def write_exception(code, exc):
         """Write exception message."""
-        abort(code, message=json.dumps({
-            'exception': exc.__class__.__name__,
-            'message': str(exc)}))
+        abort(code,
+              message=json.dumps({
+                  'exception': exc.__class__.__name__,
+                  'message': str(exc)
+              }))
 
     def get_parser(self, method):
         """Get parser object to parse request arguments of the endpoint."""
@@ -26,8 +28,9 @@ class BaseResource(Resource):
         except AttributeError:
             self._parser = reqparse.RequestParser()
             for arg, arg_type in self.manager._model.arg_types.items():
-                self._parser.add_argument(
-                    arg, type=ignore_empty_string(arg_type), location=location)
+                self._parser.add_argument(arg,
+                                          type=ignore_empty_string(arg_type),
+                                          location=location)
         return self._parser
 
     def get(self):
@@ -46,8 +49,11 @@ class BaseResource(Resource):
         except Exception as exc:
             self.write_exception(400, exc)
         else:
-            return make_response(jsonify({
-                "message": "New object created.", "obj": obj}), 200)
+            return make_response(
+                jsonify({
+                    "message": "New object created.",
+                    "obj": obj
+                }), 200)
 
     def put(self):
         """Modify an existing object."""
@@ -61,8 +67,11 @@ class BaseResource(Resource):
         except Exception as exc:
             self.write_exception(400, exc)
         else:
-            return make_response(jsonify({
-                "message": "Object modified.", "obj": obj}), 200)
+            return make_response(
+                jsonify({
+                    "message": "Object modified.",
+                    "obj": obj
+                }), 200)
 
     def delete(self):
         """Delete an existing object."""

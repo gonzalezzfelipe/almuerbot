@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from almuerbot.config import constants
-from almuerbot.models import Rating, User, Venue
+from almuerbot.data.models import Rating, User, Venue
 
 
 class Manager(ABC):
@@ -32,13 +32,21 @@ class Manager(ABC):
             if isinstance(value, list):
                 conditions.append(getattr(self._model, attr_name).in_(value))
             if isinstance(value, tuple):
-                conditions.append(getattr(self._model, attr_name).between(*value))
+                conditions.append(
+                    getattr(self._model, attr_name).between(*value))
             else:
                 conditions.append(getattr(self._model, attr_name) == value)
         session = self.get_session()
         ret_values = session.query(self._model).filter(*conditions)
         session.close()
         return ret_values
+
+    def get_first(self, **filters):
+        """Get first matching value."""
+        try:
+            return self.get(**filters)[0]
+        except IndexError:
+            return None
 
     def add(self, *args, **kwargs):
         """Add to database."""
@@ -71,21 +79,18 @@ class Manager(ABC):
 
 
 class UserManager(Manager):
-
     @property
     def _model(self):
         return User
 
 
 class RatingManager(Manager):
-
     @property
     def _model(self):
         return Rating
 
 
 class VenueManager(Manager):
-
     @property
     def _model(self):
         return Venue

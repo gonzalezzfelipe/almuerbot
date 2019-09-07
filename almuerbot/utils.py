@@ -7,8 +7,9 @@ from flask import request
 def parse_args(decoding):
     """Parse request arguments using decoding dictionary."""
     return {
-        k: request.args.get(k, type=v) for k, v in decoding.items()
-        if request.args.get(k, type=v)}
+        k: request.args.get(k, type=v)
+        for k, v in decoding.items() if request.args.get(k, type=v)
+    }
 
 
 def decode_url(encoded):

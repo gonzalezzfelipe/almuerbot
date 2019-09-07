@@ -18,8 +18,9 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(100))
     email = Column(String(100))
-    favourite_venue_id = Column(
-        Integer, ForeignKey('venues.id'), nullable=True)
+    favourite_venue_id = Column(Integer,
+                                ForeignKey('venues.id'),
+                                nullable=True)
     favourite_venue = relationship('Venue', foreign_keys=[favourite_venue_id])
 
     arg_types = {
@@ -33,8 +34,7 @@ class User(Base):
             'id': self.id,
             'name': self.name,
             'email': self.email,
-            'favourite_venue_id': self.favourite_venue_id,
-            'favourite_venue': self.favourite_venue.as_dict(),
+            'favourite_venue_id': self.favourite_venue_id
         }
 
 
@@ -94,8 +94,6 @@ class Rating(Base):
         return {
             'user_id': self.user_id,
             'venue_id': self.venue_id,
-            'user': self.user.as_dict(),
-            'venue': self.venue.as_dict(),
             'date': self.date,
             'overall': self.overall,
             'quality': self.quality,
