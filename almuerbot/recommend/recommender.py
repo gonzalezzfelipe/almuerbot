@@ -10,6 +10,7 @@ class Recommender:
     def recommend(
             self,
             user_id=None,
+            group_id=None,
             price_weight=None,
             distance_weight=None,
             wait_time_weight=None,

@@ -1,7 +1,7 @@
 import datetime as dt
 
-from sqlalchemy import create_engine
-from sqlalchemy import Column, String, Integer, ForeignKey, Date, Float, JSON
+from sqlalchemy import (create_engine, Column, String, Integer, ForeignKey,
+                        Date, Float, JSON)
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -18,6 +18,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(100))
     email = Column(String(100))
+    groups = relationship('Group', secondary='groups_to_users')
     favourite_venue_id = Column(Integer,
                                 ForeignKey('venues.id'),
                                 nullable=True)
@@ -34,6 +35,8 @@ class User(Base):
             'id': self.id,
             'name': self.name,
             'email': self.email,
+            'groups':
+            self.groups.as_dict() if self.groups is not None else None,
             'favourite_venue_id': self.favourite_venue_id
         }
 
@@ -100,3 +103,32 @@ class Rating(Base):
             'price': self.price,
             'wait_time': self.wait_time,
         }
+
+
+class Group(Base):
+
+    __tablename__ = 'groups'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100))
+    users = relationship('User', secondary='groups_to_users')
+    arg_types = {
+        'name': str,
+        'email': str,
+        'users': lambda x: [int(a) for a in x.split(',')]
+    }
+
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'users': self.users.as_dict(),
+            'favourite_venue_id': self.favourite_venue_id
+        }
+
+
+class GroupsToUsers(Base):
+
+    __tablename__ = 'groups_to_users'
+    user_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
+    group_id = Column(Integer, ForeignKey('groups.id'), primary_key=True)

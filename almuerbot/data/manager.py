@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from almuerbot.config import constants
-from almuerbot.data.models import Rating, User, Venue
+from almuerbot.data.models import Rating, User, Venue, Group
 
 
 class Manager(ABC):
@@ -79,9 +79,13 @@ class Manager(ABC):
 
 
 class UserManager(Manager):
+
     @property
     def _model(self):
         return User
+
+    def add_group(self, id, group):
+
 
 
 class RatingManager(Manager):
