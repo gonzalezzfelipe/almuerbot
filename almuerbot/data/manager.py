@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from almuerbot.config import constants
-from almuerbot.data.models import Rating, User, Venue, Group
+from almuerbot.data.models import Rating, User, Venue, Group, Category
 
 
 class Manager(ABC):
@@ -27,6 +27,7 @@ class Manager(ABC):
 
     def get(self, **filters):
         """Get all values that match filters."""
+        session = filters.pop('session', False)
         conditions = []
         for attr_name, value in filters.items():
             if isinstance(value, list):
@@ -36,7 +37,7 @@ class Manager(ABC):
                     getattr(self._model, attr_name).between(*value))
             else:
                 conditions.append(getattr(self._model, attr_name) == value)
-        session = self.get_session()
+        session = session or self.get_session()
         ret_values = session.query(self._model).filter(*conditions)
         session.close()
         return ret_values
@@ -48,30 +49,34 @@ class Manager(ABC):
         except IndexError:
             return None
 
+    def get_by_id(self, id, session=None):
+        """Get first matching value."""
+        return self.get_first(id=id, session=session)
+
     def add(self, *args, **kwargs):
         """Add to database."""
+        session = kwargs.pop('session', False)
         obj = self._model(*args, **kwargs)
-        session = self.get_session()
+        session = session or self.get_session()
         session.add(obj)
-        ret_val = obj.as_dict()
         session.commit()
         session.close()
-        return ret_val
+        return obj
 
     def update(self, id, **kwargs):
         """Update row by id."""
-        session = self.get_session()
+        session = kwargs.pop('session', False)
+        session = session or self.get_session()
         obj = session.query(self._model).filter_by(id=id).one()
         for attr, new_value in kwargs.items():
             setattr(obj, attr, new_value)
-        ret_val = obj.as_dict()
         session.commit()
         session.close()
-        return ret_val
+        return obj
 
-    def delete(self, id):
+    def delete(self, id, session=None):
         """Delete record from database."""
-        session = self.get_session()
+        session = session or self.get_session()
         obj = session.query(self._model).filter_by(id=id).one()
         session.delete(obj)
         session.commit()
@@ -84,17 +89,56 @@ class UserManager(Manager):
     def _model(self):
         return User
 
-    def add_group(self, id, group):
+    def add_group(self, id, group, session=None):
+        session = (
+            session
+            or self.get_session.object_session(group)
+            or self.get_session())
+        user = self.get_by_id(id)
+        user = session.merge(user)
+        group = session.merge(group)
+        user.groups.append(group)
+        session.add(user)
+        session.add(group)
+        session.commit()
 
+
+class GroupManager(Manager):
+
+    @property
+    def _model(self):
+        return Group
+
+    def add_user(self, id, user, session=None):
+        session = (
+            session
+            or self.get_session.object_session(user)
+            or self.get_session())
+        group = self.get_by_id(id)
+        user = session.merge(user)
+        group = session.merge(group)
+        group.users.append(user)
+        session.add(user)
+        session.add(group)
+        session.commit()
 
 
 class RatingManager(Manager):
+
     @property
     def _model(self):
         return Rating
 
 
 class VenueManager(Manager):
+
     @property
     def _model(self):
         return Venue
+
+
+class CategoryManager(Manager):
+
+    @property
+    def _model(self):
+        return Category

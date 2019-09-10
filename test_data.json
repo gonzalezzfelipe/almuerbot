@@ -1,0 +1,119 @@
+{
+  "users": [
+    {
+      "name": "Felipe Gonzalez",
+      "email": "felipe.gonzalez@jampp.com"
+    },
+    {
+      "name": "Lucia Fabio",
+      "email": "lucia.fabio@jampp.com"
+    },
+    {
+      "name": "Daniel Fujii",
+      "email": "daniel.fujii@jampp.com"
+    },
+    {
+      "name": "Diego Battocchio",
+      "email": "diego.battocchio@jampp.com"
+    },
+    {
+      "name": "Leonel Viera",
+      "email": "leonel.viera@jampp.com"
+    },
+    {
+      "name": "Francisco Goitia",
+      "email": "francisco.goitia@jampp.com"
+    },
+    {
+      "name": "Gonzalo Barrera Borla",
+      "email": "gonzalo.barrera@jampp.com"
+    }
+  ],
+  "categories": [
+    {
+      "name": "Etnica"
+    },
+    {
+      "name": "Pastas"
+    },
+    {
+      "name": "Variado"
+    },
+    {
+      "name": "Tartas"
+    },
+    {
+      "name": "Japonesa"
+    },
+    {
+      "name": "Pizza"
+    }
+  ],
+  "venues": [
+    {
+      "name": "Kebab Roll",
+      "distance": 3,
+      "url": "https://g.page/KebabRolldhaba",
+      "category_id": 1
+    },
+    {
+      "name": "Il Ballo del Mattone",
+      "distance": 3,
+      "url": "https://goo.gl/maps/bCm9Q6aCcNtHgXEP9",
+      "category_id": 2
+    },
+    {
+      "name": "La Boheme",
+      "distance": 3,
+      "url": "https://goo.gl/maps/2ECynjCWDhSuQwzj8",
+      "category_id": 3
+    },
+    {
+      "name": "Asturias",
+      "distance": 1,
+      "url": "https://goo.gl/maps/jTdRPS7cF5dWgjKY6",
+      "category_id": 4
+    },
+    {
+      "name": "Maiky",
+      "distance": 3,
+      "url": "https://goo.gl/maps/eTchMXzEWByHAeTu9",
+      "category_id": 3
+    },
+    {
+      "name": "Koi",
+      "distance": 3,
+      "url": "https://g.page/koidumplings",
+      "category_id": 5
+    },
+    {
+      "name": "Koko",
+      "distance": 3,
+      "url": "https://goo.gl/maps/tLtD9yEtRvykEVJu9",
+      "category_id": 5
+    },
+    {
+      "name": "Foodie",
+      "distance": 3,
+      "url": "https://goo.gl/maps/tLaepEmsjnZAyN3r9",
+      "category_id": 3
+    },
+    {
+      "name": "New York Style Pizza",
+      "distance": 1,
+      "url": "https://goo.gl/maps/TLF9VpxV4nPFLm6p6",
+      "category_id": 6
+    },
+    {
+      "name": "Hell's Pizza",
+      "distance": 5,
+      "url": "https://goo.gl/maps/fZJQZmWgSe1DaTSN9",
+      "category_id": 6
+    }
+  ],
+  "groups": [
+    {
+      "name": "Almuercero"
+    }
+  ]
+}

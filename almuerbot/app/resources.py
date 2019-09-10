@@ -4,7 +4,8 @@ from flask import make_response, jsonify
 from flask_restful import Resource, reqparse, abort
 
 from almuerbot.config import constants
-from almuerbot.data.manager import UserManager, RatingManager, VenueManager
+from almuerbot.data.manager import (
+    UserManager, RatingManager, VenueManager, GroupManager, CategoryManager)
 from almuerbot.utils import ignore_empty_string
 
 
@@ -124,4 +125,30 @@ class VenuesResource(BaseResource):
             return self._manager
         except AttributeError:
             self._manager = VenueManager()
+        return self._manager
+
+
+class GroupsResource(BaseResource):
+
+    _endpoint = '/groups'
+
+    @property
+    def manager(self):
+        try:
+            return self._manager
+        except AttributeError:
+            self._manager = GroupManager()
+        return self._manager
+
+
+class CategoryResource(BaseResource):
+
+    _endpoint = '/categories'
+
+    @property
+    def manager(self):
+        try:
+            return self._manager
+        except AttributeError:
+            self._manager = CategoryManager()
         return self._manager

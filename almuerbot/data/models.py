@@ -11,64 +11,62 @@ from almuerbot.utils import decode_url, parse_datetime, nullable_cast
 Base = declarative_base()
 
 
-class User(Base):
+class _Helper:
+
+    def as_dict(self, include=False):
+        ret = {attr: getattr(self, attr) for attr in self.dict_attrs}
+        if include:
+            for _include in include:
+                includes = getattr(self, _include)
+                if isinstance(includes, list):
+                    ret[_include] = [model.as_dict() for model in includes]
+                else:
+                    ret[_include] = includes.as_dict()
+        return ret
+
+
+class User(Base, _Helper):
 
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
+    email = Column(String(100), unique=True)
     name = Column(String(100))
-    email = Column(String(100))
     groups = relationship('Group', secondary='groups_to_users')
     favourite_venue_id = Column(Integer,
                                 ForeignKey('venues.id'),
                                 nullable=True)
     favourite_venue = relationship('Venue', foreign_keys=[favourite_venue_id])
 
+    dict_attrs = ['id', 'name', 'email', 'favourite_venue_id']
     arg_types = {
-        'name': str,
-        'email': str,
-        'favourite_venue_id': lambda x: nullable_cast(x, int)
-    }
-
-    def as_dict(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'email': self.email,
-            'groups':
-            self.groups.as_dict() if self.groups is not None else None,
-            'favourite_venue_id': self.favourite_venue_id
-        }
+        'name': str, 'email': str, 'favourite_venue_id': nullable_cast(int)}
 
 
-class Venue(Base):
+class Venue(Base, _Helper):
 
     __tablename__ = 'venues'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(100))
+    name = Column(String(100), unique=True)
     distance = Column(Integer)
     url = Column(String(100), nullable=True)
     closed_on = Column(JSON)
+    category_id = Column(Integer, ForeignKey('categories.id'), nullable=True)
+    category = relationship(
+        'Category', backref='venues', foreign_keys=[category_id])
 
+    dict_attrs = ['id', 'name', 'distance', 'url', 'closed_on', 'category_id']
     arg_types = {
         'name': str,
         'distance': int,
         'url': decode_url,
-        'closed_on': lambda x: [int(a) for a in x.split(',')]
+        'closed_on': lambda x: [int(a) for a in x.split(',')],
+        'category_id': nullable_cast(int)
     }
 
-    def as_dict(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'distance': self.distance,
-            'url': self.url,
-            'closed_on': self.closed_on
-        }
 
-
-class Rating(Base):
+class Rating(Base, _Helper):
 
     __tablename__ = 'ratings'
 
@@ -83,48 +81,47 @@ class Rating(Base):
     price = Column(Float, nullable=True, default=None)
     wait_time = Column(Float, nullable=True, default=None)
 
+    dict_attrs = [
+        'id',
+        'user_id',
+        'venue_id',
+        'date',
+        'overall',
+        'quality',
+        'price',
+        'wait_time']
     arg_types = {
         'user_id': int,
         'venue_id': int,
         'date': parse_datetime,
-        'overall': lambda x: nullable_cast(x, int),
-        'quality': lambda x: nullable_cast(x, int),
-        'price': lambda x: nullable_cast(x, float),
-        'wait_time': lambda x: nullable_cast(x, float)
+        'overall': nullable_cast(int),
+        'quality': nullable_cast(int),
+        'price': nullable_cast(float),
+        'wait_time': nullable_cast(float)
     }
 
-    def as_dict(self):
-        return {
-            'user_id': self.user_id,
-            'venue_id': self.venue_id,
-            'date': self.date,
-            'overall': self.overall,
-            'quality': self.quality,
-            'price': self.price,
-            'wait_time': self.wait_time,
-        }
 
-
-class Group(Base):
+class Group(Base, _Helper):
 
     __tablename__ = 'groups'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(100))
+    name = Column(String(100), unique=True)
     users = relationship('User', secondary='groups_to_users')
-    arg_types = {
-        'name': str,
-        'email': str,
-        'users': lambda x: [int(a) for a in x.split(',')]
-    }
 
-    def as_dict(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'users': self.users.as_dict(),
-            'favourite_venue_id': self.favourite_venue_id
-        }
+    dict_attrs = ['id', 'name']
+    arg_types = {'name': str}
+
+
+class Category(Base, _Helper):
+
+    __tablename__ = 'categories'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100), unique=True)
+
+    dict_attrs = ['id', 'name']
+    arg_types = {'name': str, 'email': str}
 
 
 class GroupsToUsers(Base):

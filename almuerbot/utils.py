@@ -30,9 +30,8 @@ def parse_datetime(date_string):
     return iso8601.parse_date(date_string)
 
 
-def nullable_cast(value, type_):
-    if value is not None or value == '':
-        return type_(value)
+def nullable_cast(type_):
+    return lambda x: value if value is None else type_(value)
 
 
 def ignore_empty_string(arg_type):

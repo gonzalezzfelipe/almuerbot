@@ -43,8 +43,8 @@ def create_app(debug=constants.WEBAPP_DEBUG,
 
 
 if __name__ == '__main__':
-    from almuerbot.models import Base
-    from almuerbot.manager import UserManager
+    from almuerbot.data.models import Base
+    from almuerbot.data.manager import UserManager
 
     Base.metadata.create_all(UserManager().engine)
 
