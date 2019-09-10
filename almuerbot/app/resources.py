@@ -15,11 +15,10 @@ class BaseResource(Resource):
     @staticmethod
     def write_exception(code, exc):
         """Write exception message."""
-        abort(code,
-              message=json.dumps({
-                  'exception': exc.__class__.__name__,
-                  'message': str(exc)
-              }))
+        abort(
+            code,
+            message=json.dumps(
+                {'exception': exc.__class__.__name__, 'message': str(exc)}))
 
     def get_parser(self, method):
         """Get parser object to parse request arguments of the endpoint."""
@@ -29,14 +28,21 @@ class BaseResource(Resource):
         except AttributeError:
             self._parser = reqparse.RequestParser()
             for arg, arg_type in self.manager._model.arg_types.items():
-                self._parser.add_argument(arg,
-                                          type=ignore_empty_string(arg_type),
-                                          location=location)
+                self._parser.add_argument(
+                    arg,
+                    type=ignore_empty_string(arg_type),
+                    location=location,
+                    store_missing=False)
+            self._parser.add_argument(
+                'include',
+                type=ignore_empty_string(lambda x: x.split(',')),
+                location=location,
+                store_missing=False)
         return self._parser
 
     def get(self):
         """Get all objects that match the filters."""
-        args = self.get_parser('GET').parse_args(strict=True)
+        args = self.get_parser('GET').parse_args()
         include = args.pop('include', None)
         objects = self.manager.get(**args)
         return jsonify([a.as_dict(include=include) for a in objects])
@@ -51,10 +57,7 @@ class BaseResource(Resource):
             self.write_exception(400, exc)
         else:
             return make_response(
-                jsonify({
-                    "message": "New object created.",
-                    "obj": obj
-                }), 200)
+                jsonify({"message": "New object created.", "obj": obj}), 200)
 
     def put(self):
         """Modify an existing object."""
@@ -69,10 +72,7 @@ class BaseResource(Resource):
             self.write_exception(400, exc)
         else:
             return make_response(
-                jsonify({
-                    "message": "Object modified.",
-                    "obj": obj
-                }), 200)
+                jsonify({"message": "Object modified.", "obj": obj}), 200)
 
     def delete(self):
         """Delete an existing object."""

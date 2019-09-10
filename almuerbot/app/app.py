@@ -1,8 +1,9 @@
 from flask import Flask
 from flask_restful import Api
 
-from almuerbot.app.resources import (UsersResource, RatingsResource,
-                                     VenuesResource)
+from almuerbot.app.resources import (
+    UsersResource, RatingsResource, VenuesResource, GroupsResource,
+    CategoryResource)
 from almuerbot.config import constants
 from almuerbot.app.new import new  #, new_almuerbot, new_autocohort, new_user
 
@@ -15,7 +16,12 @@ def create_app(debug=constants.WEBAPP_DEBUG,
 
     # RestAPI for objects.
     api = Api(app)
-    for resource in [UsersResource, RatingsResource, VenuesResource]:
+    for resource in [
+            UsersResource,
+            RatingsResource,
+            VenuesResource,
+            GroupsResource,
+            CategoryResource]:
         api.add_resource(resource, resource._endpoint)
 
     # Adding new objects through UI.
