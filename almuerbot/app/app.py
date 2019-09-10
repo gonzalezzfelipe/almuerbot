@@ -1,3 +1,5 @@
+from functools import partial
+
 from flask import Flask
 from flask_restful import Api
 
@@ -5,7 +7,7 @@ from almuerbot.app.resources import (
     UsersResource, RatingsResource, VenuesResource, GroupsResource,
     CategoryResource)
 from almuerbot.config import constants
-from almuerbot.app.new import new  #, new_almuerbot, new_autocohort, new_user
+from almuerbot.app.new import new
 
 
 def create_app(debug=constants.WEBAPP_DEBUG,
@@ -27,24 +29,12 @@ def create_app(debug=constants.WEBAPP_DEBUG,
     # Adding new objects through UI.
     app.add_url_rule(rule='/', endpoint='home', view_func=new)
     app.add_url_rule(rule='/new', endpoint='new', view_func=new)
-    app.add_url_rule(
-        rule='/new/user',
-        endpoint='new_user',
-        view_func=new,
-        # view_func=new_user,
-        methods=['GET', 'POST'])
-    app.add_url_rule(
-        rule='/new/venue',
-        endpoint='new_venue',
-        view_func=new,
-        # view_func=new_autocohort,
-        methods=['GET', 'POST'])
-    app.add_url_rule(
-        rule='/new/rating',
-        endpoint='new_rating',
-        view_func=new,
-        # view_func=new_rating,
-        methods=['GET', 'POST'])
+    for entity in ['users', 'groups', 'categories', 'venues']:
+        app.add_url_rule(
+            rule=f'/new/{entity}',
+            endpoint=f'new_{entity}',
+            view_func=partial(new, entity=entity),
+            methods=['GET', 'POST'])
     return app
 
 

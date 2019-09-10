@@ -59,9 +59,10 @@ class Manager(ABC):
         obj = self._model(*args, **kwargs)
         session = session or self.get_session()
         session.add(obj)
+        ret = obj.as_dict()
         session.commit()
         session.close()
-        return obj
+        return ret
 
     def update(self, id, **kwargs):
         """Update row by id."""
@@ -70,9 +71,10 @@ class Manager(ABC):
         obj = session.query(self._model).filter_by(id=id).one()
         for attr, new_value in kwargs.items():
             setattr(obj, attr, new_value)
+        ret = obj.as_dict()
         session.commit()
         session.close()
-        return obj
+        return ret
 
     def delete(self, id, session=None):
         """Delete record from database."""
