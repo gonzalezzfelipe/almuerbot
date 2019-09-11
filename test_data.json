@@ -52,68 +52,146 @@
   "venues": [
     {
       "name": "Kebab Roll",
-      "distance": 3,
+      "latitude": -34.5828476,
+      "longitude": -58.4400016,
       "url": "https://g.page/KebabRolldhaba",
       "category_id": 1
     },
     {
       "name": "Il Ballo del Mattone",
-      "distance": 3,
+      "latitude": -34.5837814,
+      "longitude": -58.4407333,
       "url": "https://goo.gl/maps/bCm9Q6aCcNtHgXEP9",
       "category_id": 2
     },
     {
       "name": "La Boheme",
-      "distance": 3,
+      "latitude": -34.583487,
+      "longitude": -58.4414817,
       "url": "https://goo.gl/maps/2ECynjCWDhSuQwzj8",
       "category_id": 3
     },
     {
       "name": "Asturias",
-      "distance": 1,
+      "latitude": -34.581762,
+      "longitude": -58.4437369,
       "url": "https://goo.gl/maps/jTdRPS7cF5dWgjKY6",
       "category_id": 4
     },
     {
       "name": "Maiky",
-      "distance": 3,
+      "latitude": 34.5836937,
+      "longitude": -58.4410599,
       "url": "https://goo.gl/maps/eTchMXzEWByHAeTu9",
       "category_id": 3
     },
     {
       "name": "Koi",
-      "distance": 3,
+      "latitude": -34.583565,
+      "longitude": -58.4415577,
       "url": "https://g.page/koidumplings",
       "category_id": 5
     },
     {
       "name": "Koko",
-      "distance": 3,
+      "latitude": -34.5828395,
+      "longitude": -58.4427819,
       "url": "https://goo.gl/maps/tLtD9yEtRvykEVJu9",
       "category_id": 5
     },
     {
       "name": "Foodie",
-      "distance": 3,
+      "latitude": -34.5821008,
+      "longitude": -58.4422754,
       "url": "https://goo.gl/maps/tLaepEmsjnZAyN3r9",
       "category_id": 3
     },
     {
       "name": "New York Style Pizza",
-      "distance": 1,
+      "latitude": -34.5826734,
+      "longitude": -58.4405635,
       "url": "https://goo.gl/maps/TLF9VpxV4nPFLm6p6",
       "category_id": 6
     },
     {
       "name": "Hell's Pizza",
-      "distance": 5,
+      "latitude": -34.5837551,
+      "longitude": -58.4391847,
       "url": "https://goo.gl/maps/fZJQZmWgSe1DaTSN9",
       "category_id": 6
     }
   ],
   "groups": [
     {
-      "name": "Almuercero"
+      "name": "Almuercero",
+      "latitude": -34.581282,
+      "longitude": -58.439954
+    }
+  ],
+  "ratings": [
+    {
+      "user_id": 1,
+      "venue_id": 1,
+      "date": "2019-09-09",
+      "overall": 5,
+      "price": 0.9,
+      "wait_time": 0.6
+    },
+    {
+      "user_id": 2,
+      "venue_id": 3,
+      "date": "2019-09-09",
+      "overall": 4,
+      "price": 0.3,
+      "wait_time": 0.3
+    },
+    {
+      "user_id": 1,
+      "venue_id": 3,
+      "date": "2019-09-05",
+      "overall": 5,
+      "price": 0.3,
+      "wait_time": 0.2
+    },
+    {
+      "user_id": 3,
+      "venue_id": 1,
+      "date": "2019-09-05",
+      "overall": 3,
+      "price": 0.99,
+      "wait_time": 0.6
+    },
+    {
+      "user_id": 4,
+      "venue_id": 1,
+      "date": "2019-09-06",
+      "overall": 5,
+      "price": 0.8,
+      "wait_time": 0.5
+    },
+    {
+      "user_id": 5,
+      "venue_id": 1,
+      "date": "2019-09-02",
+      "overall": 5,
+      "price": 0.99,
+      "wait_time": 0.6
+    },
+    {
+      "user_id": 6,
+      "venue_id": 1,
+      "date": "2019-09-04",
+      "overall": 3,
+      "price": 0.99,
+      "wait_time": 0.7
+    },
+    {
+      "user_id": 1,
+      "venue_id": 4,
+      "date": "2019-09-04",
+      "overall": 3,
+      "price": 0.1,
+      "wait_time": 0.1
     }
   ]
 }

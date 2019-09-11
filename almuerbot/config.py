@@ -31,7 +31,10 @@ _constants.update({
     'SECRET_KEY': 'dev',
     'WEBAPP_PORT': 5000,
     'WEBAPP_HOST': 'localhost',
-    'WEBAPP_DEBUG': True
+    'WEBAPP_DEBUG': True,
+    'MAX_DISTANCE': 2,
+    'WEIGHTS': {
+        'price_weight': 3, 'wait_time_weight': 2, 'innovation_weight': 5}
 })
 
 # Personal configurations in stardust config file.

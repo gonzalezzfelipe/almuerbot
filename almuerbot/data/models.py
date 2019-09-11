@@ -49,22 +49,28 @@ class Venue(Base, _Helper):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(100), unique=True)
-    distance = Column(Integer)
+    latitude = Column(Float, nullable=False)
+    longitude = Column(Float, nullable=False)
     url = Column(String(100), nullable=True)
     closed_on = Column(JSON)
     category_id = Column(Integer, ForeignKey('categories.id'), nullable=True)
     category = relationship(
         'Category', backref='venues', foreign_keys=[category_id])
 
-    dict_attrs = ['id', 'name', 'distance', 'url', 'closed_on', 'category_id']
+    dict_attrs = ['id', 'name', 'latitude', 'longitude', 'url', 'closed_on', 'category_id']
     arg_types = {
         'name': str,
-        'distance': int,
+        'latitude': float,
+        'longitude': float,
         'url': decode_url,
         'closed_on': lambda x: [int(a) for a in x.split(',')],
         'category_id': nullable_cast(int)
     }
 
+    @property
+    def score(self):
+        overalls = [rating.overall for rating in self.ratings]
+        return sum(overalls) / len(overalls)
 
 class Rating(Base, _Helper):
 
@@ -77,7 +83,6 @@ class Rating(Base, _Helper):
     venue = relationship('Venue', backref='ratings', foreign_keys=[venue_id])
     date = Column(Date, nullable=False, default=dt.datetime.utcnow())
     overall = Column(Integer, nullable=True, default=None)
-    quality = Column(Integer, nullable=True, default=None)
     price = Column(Float, nullable=True, default=None)
     wait_time = Column(Float, nullable=True, default=None)
 
@@ -87,7 +92,6 @@ class Rating(Base, _Helper):
         'venue_id',
         'date',
         'overall',
-        'quality',
         'price',
         'wait_time']
     arg_types = {
@@ -95,7 +99,6 @@ class Rating(Base, _Helper):
         'venue_id': int,
         'date': parse_datetime,
         'overall': nullable_cast(int),
-        'quality': nullable_cast(int),
         'price': nullable_cast(float),
         'wait_time': nullable_cast(float)
     }
@@ -108,9 +111,11 @@ class Group(Base, _Helper):
     id = Column(Integer, primary_key=True)
     name = Column(String(100), unique=True)
     users = relationship('User', secondary='groups_to_users')
+    latitude = Column(Float, nullable=False)
+    longitude = Column(Float, nullable=False)
 
-    dict_attrs = ['id', 'name']
-    arg_types = {'name': str}
+    dict_attrs = ['id', 'name', 'latitude', 'longitude']
+    arg_types = {'name': str, 'latitude': float, 'longitude': float}
 
 
 class Category(Base, _Helper):

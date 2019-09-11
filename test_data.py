@@ -1,7 +1,8 @@
+import datetime as dt
 import json
 
 from almuerbot.data.manager import (
-    UserManager, GroupManager, VenueManager, CategoryManager)
+    UserManager, GroupManager, VenueManager, CategoryManager, RatingManager)
 from almuerbot.data.models import Base
 
 Base.metadata.create_all(UserManager().engine)
@@ -15,6 +16,10 @@ for manager in [
     for entity in data[manager._model.__tablename__]:
         manager.add(**entity)
 
+rm = RatingManager()
+for rating in data['ratings']:
+    rating['date'] = dt.datetime.strptime(rating['date'], '%Y-%m-%d')
+    rm.add(**rating)
 
 um = UserManager()
 gm = GroupManager()

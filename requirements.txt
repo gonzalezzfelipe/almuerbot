@@ -2,3 +2,4 @@ flask_restful
 iso8601
 sqlalchemy
 requests
+pandas

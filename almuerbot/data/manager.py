@@ -27,19 +27,20 @@ class Manager(ABC):
 
     def get(self, **filters):
         """Get all values that match filters."""
-        session = filters.pop('session', False)
+        _session = filters.pop('session', False)
         conditions = []
         for attr_name, value in filters.items():
             if isinstance(value, list):
                 conditions.append(getattr(self._model, attr_name).in_(value))
-            if isinstance(value, tuple):
+            elif isinstance(value, tuple):
                 conditions.append(
                     getattr(self._model, attr_name).between(*value))
             else:
                 conditions.append(getattr(self._model, attr_name) == value)
-        session = session or self.get_session()
+        session = _session or self.get_session()
         ret_values = session.query(self._model).filter(*conditions)
-        session.close()
+        if not _session:
+            session.close()
         return ret_values
 
     def get_first(self, **filters):
@@ -55,34 +56,37 @@ class Manager(ABC):
 
     def add(self, *args, **kwargs):
         """Add to database."""
-        session = kwargs.pop('session', False)
+        _session = kwargs.pop('session', False)
         obj = self._model(*args, **kwargs)
-        session = session or self.get_session()
+        session = _session or self.get_session()
         session.add(obj)
         ret = obj.as_dict()
-        session.commit()
-        session.close()
+        if not _session:
+            session.commit()
+            session.close()
         return ret
 
     def update(self, id, **kwargs):
         """Update row by id."""
-        session = kwargs.pop('session', False)
-        session = session or self.get_session()
+        _session = kwargs.pop('session', False)
+        session = _session or self.get_session()
         obj = session.query(self._model).filter_by(id=id).one()
         for attr, new_value in kwargs.items():
             setattr(obj, attr, new_value)
         ret = obj.as_dict()
-        session.commit()
-        session.close()
+        if not _session:
+            session.commit()
+            session.close()
         return ret
 
     def delete(self, id, session=None):
         """Delete record from database."""
-        session = session or self.get_session()
-        obj = session.query(self._model).filter_by(id=id).one()
-        session.delete(obj)
-        session.commit()
-        session.close()
+        _session = session or self.get_session()
+        obj = _session.query(self._model).filter_by(id=id).one()
+        _session.delete(obj)
+        if session is not None:
+            session.commit()
+            session.close()
 
 
 class UserManager(Manager):
@@ -92,17 +96,19 @@ class UserManager(Manager):
         return User
 
     def add_group(self, id, group, session=None):
-        session = (
+        _session = (
             session
             or self.get_session.object_session(group)
             or self.get_session())
         user = self.get_by_id(id)
-        user = session.merge(user)
-        group = session.merge(group)
+        user = _session.merge(user)
+        group = _session.merge(group)
         user.groups.append(group)
-        session.add(user)
-        session.add(group)
-        session.commit()
+        _session.add(user)
+        _session.add(group)
+        if session is not None:
+            _session.commit()
+            _session.close()
 
 
 class GroupManager(Manager):
@@ -112,17 +118,19 @@ class GroupManager(Manager):
         return Group
 
     def add_user(self, id, user, session=None):
-        session = (
+        _session = (
             session
             or self.get_session.object_session(user)
             or self.get_session())
         group = self.get_by_id(id)
-        user = session.merge(user)
-        group = session.merge(group)
+        user = _session.merge(user)
+        group = _session.merge(group)
         group.users.append(user)
-        session.add(user)
-        session.add(group)
-        session.commit()
+        _session.add(user)
+        _session.add(group)
+        if not session:
+            _session.commit()
+            _session.close()
 
 
 class RatingManager(Manager):

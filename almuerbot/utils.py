@@ -1,4 +1,5 @@
 import urllib.parse
+from math import radians, sin, cos, acos, exp
 
 import iso8601
 from flask import request
@@ -48,3 +49,14 @@ def parse_from_env(value):
         return False
     else:
         return value
+
+
+def calculate_distance(start, end):
+    slat, slon = radians(start[0]), radians(start[1])
+    elat, elon = radians(end[0]), radians(end[1])
+    return 6371.01 * acos(
+        sin(slat) * sin(elat) + cos(slat) * cos(elat) * cos(slon - elon))
+
+
+def sigmoid(x):
+  return 1 / (1 + exp(-x))

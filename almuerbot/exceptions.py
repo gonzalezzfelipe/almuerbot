@@ -1,0 +1,2 @@
+class NoVenuesException(Exception):
+    pass
